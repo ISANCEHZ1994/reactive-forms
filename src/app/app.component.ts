@@ -33,6 +33,16 @@ export class AppComponent implements OnInit{
       'gender':  new FormControl('male'),
       'hobbies': new FormArray([])
     });
+    // valueChanges is an observable that LISTENS to any changes that happen in the form - console.log to see the changes..
+    this.signupForm.valueChanges.subscribe(
+      ( value ) => console.log( value ) 
+    );
+    // statusChanges another observable that will display INVALID inside console.log UNTIL we type something inside of where the
+    // specific validator is placed that matches what we are looking for - in this case the something different from (forbidden)email
+    // INVALID => PENDING => VALID 
+    this.signupForm.statusChanges.subscribe(
+      ( status ) => console.log( status ) 
+    );
   };
 
   getControls() {
@@ -60,6 +70,7 @@ export class AppComponent implements OnInit{
   forbiddenEmails(control: FormControl): Promise<any> | Observable<any>{
     const promise = new Promise<any>(( resolve, reject ) => {
         setTimeout(() => {
+          // anything that is different from the email below will work 
           if( control.value === 'test@test.com' ){
               resolve({ 'emailsIsForbidden': true });
           } else {
