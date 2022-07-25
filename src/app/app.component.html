@@ -13,13 +13,15 @@
               formControlName="username"            
               class="form-control"             
             >
-            <!-- can also use brackets however looks overly complicated -->
+            <!-- can also use brackets on above however looks overly complicated -->
             <!-- [formControlName]="'username'" -->
             <span 
               class="help-block"
               *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched"
             >
-              Please enter a valid username!
+              <!-- Using Error Codes below! -->
+              <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']">This name is invalid!</span>
+              <span *ngIf="signupForm.get('userData.username').errors['required']">This field is required!</span>              
             </span>
           </div>
           <div class="form-group">
